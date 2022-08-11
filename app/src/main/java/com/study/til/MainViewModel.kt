@@ -24,15 +24,15 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             fetchBoardList()
                 .collect { result ->
-//                    val tempResult = mutableListOf<Board>()
-//                    result.forEach { board ->
-//                        var tempBoard = board.copy()
-//                        calculateDateUseCase(board.writeDate).collect {
-//                            tempBoard = board.copy(time = it)
-//                        }
-//                        tempResult.add(tempBoard)
-//                    }
-                    _boardList.value = result
+                    val tempResult = mutableListOf<Board>()
+                    result.forEach { board ->
+                        var tempBoard = Board()
+                        calculateDateUseCase(board.writeDate).collect {
+                            tempBoard = board.copy(time = it)
+                        }
+                        tempResult.add(tempBoard)
+                    }
+                    _boardList.value = tempResult
                 }
         }
     }
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor(
                     id = 1,
                     writer = "맑은비",
                     title = "몽실 베이커리",
-                    writeDate = "2022-08-11 19-30-22",
+                    writeDate = "2022-08-11 20-55-22",
                     content = "첫번째 케이스"
                 ),
                 Board(
