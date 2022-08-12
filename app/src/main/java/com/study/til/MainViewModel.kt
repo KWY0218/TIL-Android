@@ -3,6 +3,7 @@ package com.study.til
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.study.til.usecase.CalculateDateUseCase
+import com.study.til.usecase.Time
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,8 +28,12 @@ class MainViewModel @Inject constructor(
         val tempBoardList = mutableListOf<Board>()
         boardList.value.forEach { board ->
             var tempBoard = Board()
-            calculateDateUseCase(board.writeDate).collect { timeText ->
-                tempBoard = board.copy(time = timeText)
+            calculateDateUseCase(board.writeDate).collect { time ->
+                tempBoard = when (time) {
+                    is Time.Min -> board.copy(time = "${time.text}분 전")
+                    is Time.Hour -> board.copy(time = "${time.text}시간 전")
+                    is Time.Day -> board.copy(time = "${time.writeYear}년 ${time.writeMonth}월 ${time.writeDay}일")
+                }
             }
             tempBoardList.add(tempBoard)
         }
@@ -41,7 +46,7 @@ class MainViewModel @Inject constructor(
                 id = 1,
                 writer = "맑은비",
                 title = "몽실 베이커리",
-                writeDate = "2022-08-11 21-55-22",
+                writeDate = "2022-08-12 00-55-22",
                 content = "첫번째 케이스"
             ),
             Board(

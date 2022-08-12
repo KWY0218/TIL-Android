@@ -18,9 +18,9 @@ class CalculateDateUseCase @Inject constructor() {
 
         val diffDate = curDateSec - writeDateSec
 
-        if (diffDate < ONE_HOUR) emit("${diffDate / ONE_MIN}분 전")
-        else if (diffDate < ONE_DAY) emit("${diffDate / ONE_HOUR}시간 전")
-        else emit("$writeYear 년 $writeMonth 월 $writeDay 일")
+        if (diffDate < ONE_HOUR) emit(Time.Min(diffDate / ONE_MIN))
+        else if (diffDate < ONE_DAY) emit(Time.Hour(diffDate / ONE_HOUR))
+        else emit(Time.Day(writeYear.toInt(), writeMonth.toInt(), writeDay.toInt()))
     }
 
     companion object {
@@ -28,4 +28,10 @@ class CalculateDateUseCase @Inject constructor() {
         const val ONE_HOUR = 3_600
         const val ONE_MIN = 60
     }
+}
+
+sealed class Time {
+    data class Min(val text: Int) : Time()
+    data class Hour(val text: Int) : Time()
+    data class Day(val writeYear: Int, val writeMonth: Int, val writeDay: Int) : Time()
 }
