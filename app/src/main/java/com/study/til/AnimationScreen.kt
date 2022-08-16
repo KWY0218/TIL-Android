@@ -1,10 +1,14 @@
 package com.study.til
 
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,9 +34,10 @@ fun AnimationScreen(
     viewModel: MainViewModel
 ) {
     val rules by viewModel.rules.collectAsState()
+    val progress by viewModel.progressRating.collectAsState()
     LazyColumn(Modifier.fillMaxSize().padding(horizontal = 24.dp)) {
         item {
-            ProgressBarWithAnimation()
+            ProgressBarWithAnimation(progress)
             Spacer(modifier = Modifier.size(20.dp))
         }
         items(rules) { rule ->
@@ -45,29 +50,27 @@ fun AnimationScreen(
 }
 
 @Composable
-fun ProgressBarWithAnimation() {
-//    val divideAni by animateFloatAsState(
-//        targetValue = progressing.value,
-//        animationSpec = tween(durationMillis = 600, easing = LinearOutSlowInEasing)
-//    )
+fun ProgressBarWithAnimation(
+    progress: Float
+) {
+    val progressRating by animateFloatAsState(
+        targetValue = progress,
+        animationSpec = tween(durationMillis = 600, easing = LinearOutSlowInEasing)
+    )
     Column(Modifier.fillMaxWidth()) {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
-//            val imgAni by animateDpAsState(
-//                targetValue = (maxWidth / size) * count.value - 24.dp,
-//                animationSpec = tween(durationMillis = 600, easing = LinearOutSlowInEasing)
-//            )
             Image(
-//                modifier = Modifier.absoluteOffset(x = imgAni),
+                modifier = Modifier.absoluteOffset(x = maxWidth.times(progressRating).minus(24.dp)),
                 painter = painterResource(id = R.drawable.ic_run),
                 contentDescription = ""
             )
         }
         RoundedProgressIndicator(
-            progress = 0.0f,
+            progress = progressRating,
             trackColor = Color.Blue,
             backgroundColor = Color.LightGray,
             modifier = Modifier
-                .height(100.dp)
+                .height(20.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(4.dp))
         )

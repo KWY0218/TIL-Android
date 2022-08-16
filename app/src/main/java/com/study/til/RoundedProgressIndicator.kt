@@ -1,8 +1,5 @@
 package com.study.til
 
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,13 +14,6 @@ fun RoundedProgressIndicator(
     trackColor: Color,
     backgroundColor: Color
 ) {
-    val animateNumber = animateFloatAsState(
-        targetValue = progress,
-        animationSpec = tween(
-            durationMillis = 600,
-            easing = LinearOutSlowInEasing
-        )
-    )
     Canvas(modifier = modifier) {
         drawLine(
             color = backgroundColor,
@@ -33,13 +23,13 @@ fun RoundedProgressIndicator(
             strokeWidth = 50F
         )
 
-//        val calculatedProgress = ((size.width / listSize) * count.value)
+        val calculatedProgress = (progress * size.width)
 
         drawLine(
             color = trackColor,
             strokeWidth = 50F,
             start = Offset(x = 0f, y = 0f),
-            end = Offset(x = 0.0f, y = 0f),
+            end = Offset(x = calculatedProgress, y = 0f),
             cap = StrokeCap.Round
         )
     }
