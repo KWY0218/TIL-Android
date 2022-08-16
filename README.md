@@ -3,7 +3,7 @@
 ## 결과
 https://user-images.githubusercontent.com/82709044/184907223-ce2a3f47-47d5-4421-a450-fed709bd1d8e.mp4
 
-### MainViewModel
+## MainViewModel
 ``` kotlin
 val progressRating: StateFlow<Float> = rules.map { rules ->
     var rating = 0.0f
@@ -14,7 +14,7 @@ val progressRating: StateFlow<Float> = rules.map { rules ->
 - progress 진행 상태를 Float로 저장한다.
 - 진행 상태는 rules를 for 문 돌려서 `isChecked` 가 `true` 일 때 `1.0/(총 리스트 수)`를 Float로 변환한 것을 더한다.
 
-### ProgressBarWithAnimation
+## ProgressBarWithAnimation
 ``` kotlin
 val progressRating by animateFloatAsState(
     targetValue = progress,
@@ -37,7 +37,7 @@ BoxWithConstraints(Modifier.fillMaxWidth()) {
 - 이를 통해서 `(핸드폰의 총 너비)*(현재 진행률) - 24.dp` 를 통해서 image의 x 좌표 dp를 구한다.
 - `-24.dp'를 한 이유 : 이미지 asset이 48x48 dp 이며, 프로그래스 바 끝 부분 중앙에 이미지를 두고 싶기 때문이다.
 
-### RoundedProgressIndicator
+## RoundedProgressIndicator
 ``` kotlin
     Canvas(modifier = modifier.fillMaxWidth()) {
         drawLine(
