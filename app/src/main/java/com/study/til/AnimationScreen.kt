@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -35,7 +33,11 @@ fun AnimationScreen(
 ) {
     val rules by viewModel.rules.collectAsState()
     val progress by viewModel.progressRating.collectAsState()
-    LazyColumn(Modifier.fillMaxSize().padding(horizontal = 24.dp)) {
+    LazyColumn(
+        Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp)
+    ) {
         item {
             ProgressBarWithAnimation(progress)
             Spacer(modifier = Modifier.size(20.dp))
@@ -57,7 +59,11 @@ fun ProgressBarWithAnimation(
         targetValue = progress,
         animationSpec = tween(durationMillis = 600, easing = LinearOutSlowInEasing)
     )
-    Column(Modifier.fillMaxWidth()) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+    ) {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             Image(
                 modifier = Modifier.absoluteOffset(x = maxWidth.times(progressRating).minus(24.dp)),
@@ -70,9 +76,8 @@ fun ProgressBarWithAnimation(
             trackColor = Color.Blue,
             backgroundColor = Color.LightGray,
             modifier = Modifier
-                .height(20.dp)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(4.dp))
+                .height(8.dp)
         )
     }
 }

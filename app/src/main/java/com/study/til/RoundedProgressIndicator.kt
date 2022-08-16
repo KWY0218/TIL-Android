@@ -1,6 +1,7 @@
 package com.study.til
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -14,23 +15,23 @@ fun RoundedProgressIndicator(
     trackColor: Color,
     backgroundColor: Color
 ) {
-    Canvas(modifier = modifier) {
+    Canvas(modifier = modifier.fillMaxWidth()) {
         drawLine(
             color = backgroundColor,
             cap = StrokeCap.Round,
             start = Offset(x = 0f, y = 0f),
             end = Offset(x = size.width, y = 0f),
-            strokeWidth = 50F
+            strokeWidth = 30f
         )
 
         val calculatedProgress = (progress * size.width)
 
         drawLine(
             color = trackColor,
-            strokeWidth = 50F,
             start = Offset(x = 0f, y = 0f),
             end = Offset(x = calculatedProgress, y = 0f),
-            cap = StrokeCap.Round
+            cap = StrokeCap.Round,
+            strokeWidth = 30f
         )
     }
 }
