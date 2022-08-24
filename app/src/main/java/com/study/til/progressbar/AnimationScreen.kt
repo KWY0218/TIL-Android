@@ -1,4 +1,4 @@
-package com.study.til
+package com.study.til.progressbar
 
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -26,6 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.study.til.MainViewModel
+import com.study.til.R
+import com.study.til.Rule
 
 @Composable
 fun AnimationScreen(

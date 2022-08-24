@@ -1,4 +1,4 @@
-package com.study.til
+package com.study.til.progressbar
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
