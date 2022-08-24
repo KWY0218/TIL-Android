@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 
 @Composable
 fun RoundedProgressIndicator(
@@ -16,22 +17,32 @@ fun RoundedProgressIndicator(
     backgroundColor: Color
 ) {
     Canvas(modifier = modifier.fillMaxWidth()) {
-        drawLine(
+        val calculatedProgress = (progress * size.width)
+
+        drawRoundedLinearIndicator(
             color = backgroundColor,
-            cap = StrokeCap.Round,
-            start = Offset(x = 0f, y = 0f),
-            end = Offset(x = size.width, y = 0f),
+            endXOffset = size.width,
             strokeWidth = 30f
         )
 
-        val calculatedProgress = (progress * size.width)
-
-        drawLine(
+        drawRoundedLinearIndicator(
             color = trackColor,
-            start = Offset(x = 0f, y = 0f),
-            end = Offset(x = calculatedProgress, y = 0f),
-            cap = StrokeCap.Round,
+            endXOffset = calculatedProgress,
             strokeWidth = 30f
         )
     }
+}
+
+private fun DrawScope.drawRoundedLinearIndicator(
+    color: Color,
+    endXOffset: Float,
+    strokeWidth: Float
+) {
+    drawLine(
+        color = color,
+        start = Offset(x = 0f, y = 0f),
+        end = Offset(x = endXOffset, y = 0f),
+        cap = StrokeCap.Round,
+        strokeWidth = strokeWidth
+    )
 }
