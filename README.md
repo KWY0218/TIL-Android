@@ -4,7 +4,7 @@
 <summary>debounce</summary>
 <div markdown="1">
 
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/82709044/186551211-ca4b6d50-00f2-4667-a41f-6a0e679bd1e3.gif)
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/82709044/186558097-69e8bb35-40ea-46b2-86aa-ea2605b92807.gif)
 
   로직
 ```
