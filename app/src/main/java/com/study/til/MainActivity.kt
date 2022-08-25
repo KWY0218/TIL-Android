@@ -41,6 +41,12 @@ class MainActivity : AppCompatActivity() {
                 launch {
                     mainViewModel.rating
                         .debounce(1000)
+                        .collect {
+                            mainViewModel.sendCheckBoxState()
+                        }
+                }
+                launch {
+                    mainViewModel.rating
                         .collect { rate ->
                             Log.d("MainActivity", "main $rate")
                         }

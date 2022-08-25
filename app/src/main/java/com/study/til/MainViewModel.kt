@@ -1,7 +1,9 @@
 package com.study.til
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,5 +35,10 @@ class MainViewModel : ViewModel() {
             2 -> _checkBox2State.value = !_checkBox2State.value
             3 -> _checkBox3State.value = !_checkBox3State.value
         }
+    }
+
+    suspend fun sendCheckBoxState() {
+        delay(300)
+        Log.d("MainActivity", "통신 완료")
     }
 }
