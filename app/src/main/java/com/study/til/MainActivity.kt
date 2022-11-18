@@ -9,7 +9,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.study.til.databinding.ActivityMainBinding
+import com.study.til.flow.TAG
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             .apply {
                 vm = mainViewModel
             }
+        test1()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -61,6 +69,42 @@ class MainActivity : AppCompatActivity() {
             checkbox1.setOnClickListener { mainViewModel.setCheckBox(1) }
             checkbox2.setOnClickListener { mainViewModel.setCheckBox(2) }
             checkbox3.setOnClickListener { mainViewModel.setCheckBox(3) }
+        }
+    }
+
+    private fun test1() {
+        val myFlow = flow {
+            repeat(100) {
+                Log.d(TAG, ">> emit -> $it")
+                emit(it)
+                delay(1000)
+            }
+        }
+
+        val myStateFlow = myFlow.stateIn(
+            scope = CoroutineScope(Dispatchers.Main),
+            started = SharingStarted.Eagerly,
+            initialValue = -1
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(5000)
+            val job1 = launch(Dispatchers.IO) {
+                myStateFlow.collect { Log.d(TAG, "#1st -> $it") }
+            }
+            delay(3000)
+            val job2 = launch(Dispatchers.IO) {
+                myStateFlow.collect { Log.d(TAG, "#2nd -> $it") }
+            }
+
+            delay(5000)
+            job1.cancel()
+            job2.cancel()
+
+            delay(3000)
+            val job3 = launch {
+                myStateFlow.collect { Log.d(TAG, "#3rd -> $it") }
+            }
         }
     }
 }
