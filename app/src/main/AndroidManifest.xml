@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.study.til">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".TILApp"
         android:allowBackup="true"

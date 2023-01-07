@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.study.til"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -43,6 +43,10 @@ android {
 }
 
 dependencies {
+    implementation ('io.socket:socket.io-client:2.1.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
     // compose
     // When using a MDC theme
     implementation "com.google.android.material:compose-theme-adapter:1.1.16"
