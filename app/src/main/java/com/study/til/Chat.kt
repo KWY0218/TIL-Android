@@ -1,6 +1,7 @@
 package com.study.til
 
 data class Chat(
-    val text: String,
-    val isPerson: Person
+    val id: Int,
+    val content: String,
+    val author: String
 )

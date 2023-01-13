@@ -8,21 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.study.til.databinding.ItemMeChatBinding
 import com.study.til.databinding.ItemOtherChatBinding
 
-class ChatAdapter : ListAdapter<Chat, RecyclerView.ViewHolder>(chatComparator) {
+class ChatAdapter(
+    private val type: Int
+) : ListAdapter<Chat, RecyclerView.ViewHolder>(chatComparator) {
     private lateinit var inflater: LayoutInflater
 
     override fun getItemViewType(position: Int): Int {
-        return when (currentList[position].isPerson) {
-            Person.ME -> Person.ME.ordinal
-            Person.OTHER -> Person.OTHER.ordinal
-        }
+        return if (type == currentList[position].id) Person.ME.ordinal
+        else Person.OTHER.ordinal
     }
 
     class ChatMeViewHolder(
         private val binding: ItemMeChatBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
-            binding.chat.text = chat.text
+            binding.content.text = chat.content
+            binding.author.text = chat.author
         }
     }
 
@@ -30,7 +31,8 @@ class ChatAdapter : ListAdapter<Chat, RecyclerView.ViewHolder>(chatComparator) {
         private val binding: ItemOtherChatBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
-            binding.chat.text = chat.text
+            binding.content.text = chat.content
+            binding.author.text = chat.author
         }
     }
 
