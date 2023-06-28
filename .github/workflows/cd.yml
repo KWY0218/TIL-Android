@@ -7,7 +7,7 @@ on:
     branches: [ develop-spring ] # main branch로 push 될 때 실행됩니다.
 
 env:
-  S3_BUCKET_NAME: til
+  S3_BUCKET_NAME: til-kwy
 
 jobs:
   build:
@@ -70,7 +70,7 @@ jobs:
       run: cp ./scripts/*.sh ./deploy
       
     - name: Make zip file
-      run: zip -r ./til.zip ./deploy
+      run: zip -r ./til-kwy.zip ./deploy
       shell: bash
       
     - name: Configure AWS credentials
@@ -81,7 +81,7 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./til.zip s3://$S3_BUCKET_NAME/
+      run: aws s3 cp --region ap-northeast-2 ./til-kwy.zip s3://$S3_BUCKET_NAME/
       
     # Deploy
     - name: Deploy
@@ -93,5 +93,5 @@ jobs:
         --application-name til-code-deploy
         --deployment-group-name til-code-deploy-group
         --file-exists-behavior OVERWRITE 
-        --s3-location bucket=til,bundleType=zip,key=til.zip
+        --s3-location bucket=til-kwy,bundleType=zip,key=til-kwy.zip
         --region ap-northeast-2
