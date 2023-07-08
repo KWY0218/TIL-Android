@@ -17,4 +17,8 @@ public class User {
         User u4 = new User("서채원");
         return Arrays.asList(u1, u2, u3, u4);
     }
+
+    public static List<String> getDummyName() {
+        return Arrays.asList("강원용", "도소현", "서지원", "서채원");
+    }
 }

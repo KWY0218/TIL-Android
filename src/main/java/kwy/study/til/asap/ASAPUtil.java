@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import kwy.study.til.asap.domain.DateAvailability;
 import kwy.study.til.asap.domain.Meeting;
+import kwy.study.til.asap.domain.MeetingTime;
 import kwy.study.til.asap.domain.PreferTime;
 import kwy.study.til.asap.domain.TimeSlot;
 import lombok.Getter;
@@ -14,8 +15,9 @@ import lombok.Getter;
 public class ASAPUtil {
     private Map<String, Map<TimeSlot, List<String>>> timeTable = new HashMap<>();
     private final Meeting meeting = Meeting.getDummy();
+    private final List<MeetingTime> meetingTimes = MeetingTime.getDummy();
 
-    public void setTimeTable() {
+    public void initTimeTable() {
         List<PreferTime> pts = meeting.getPreferTimes();
         List<TimeSlot> timeSlots = TimeSlot.getTimeSlots(pts.get(0).getStartTime().ordinal(), pts.get(0).getEndTime().ordinal());
         for (DateAvailability ad : meeting.getDateAvailabilities()) {
@@ -28,4 +30,15 @@ public class ASAPUtil {
         }
     }
 
+    public void setTimeTable() {
+        for (MeetingTime mt : meetingTimes) {
+            String col = String.format("%s.%s.%s", mt.getMonth(), mt.getDay(), mt.getDayOfWeek());
+            List<TimeSlot> timeSlots = TimeSlot.getTimeSlots(mt.getStartTime().ordinal(), mt.getEndTime().ordinal());
+            Map<TimeSlot, List<String>> rowTable = timeTable.get(col);
+
+            for (TimeSlot ts : timeSlots) {
+                rowTable.get(ts).add(mt.getUserName());
+            }
+        }
+    }
 }
