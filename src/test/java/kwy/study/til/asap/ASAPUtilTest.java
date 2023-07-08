@@ -50,19 +50,24 @@ class ASAPUtilTest {
 
         // then
         assertAll("사람 4명",
-                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_22_00).size()).isEqualTo(4),
-                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_22_30).size()).isEqualTo(4),
-                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_23_00).size()).isEqualTo(4),
-                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_23_30).size()).isEqualTo(4),
-                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_24_00).size()).isEqualTo(4)
+                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_22_00).userNames.size()).isEqualTo(4),
+                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_22_30).userNames.size()).isEqualTo(4),
+                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_23_00).userNames.size()).isEqualTo(4),
+                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_23_30).userNames.size()).isEqualTo(4),
+                () -> assertThat(asapUtil.getTimeTable().get("7.1.토").get(TimeSlot.SLOT_24_00).userNames.size()).isEqualTo(4)
         );
 
         assertAll("사람 3명",
-                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_18_00).size()).isEqualTo(3),
-                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_18_30).size()).isEqualTo(3),
-                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_19_00).size()).isEqualTo(3),
-                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_19_30).size()).isEqualTo(3),
-                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_20_00).size()).isEqualTo(3)
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_18_00).userNames.size()).isEqualTo(3),
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_18_30).userNames.size()).isEqualTo(3),
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_19_00).userNames.size()).isEqualTo(3),
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_19_30).userNames.size()).isEqualTo(3),
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_20_00).userNames.size()).isEqualTo(3)
+        );
+
+        assertAll("가중치",
+                () -> assertThat(asapUtil.getTimeTable().get("7.4.화").get(TimeSlot.SLOT_18_00).weight).isEqualTo(3),
+                () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_22_00).weight).isEqualTo(1)
         );
     }
 }

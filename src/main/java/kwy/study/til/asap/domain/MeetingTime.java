@@ -34,11 +34,11 @@ public class MeetingTime {
 
         MeetingTime t7 = new MeetingTime(TimeSlot.SLOT_22_00, TimeSlot.SLOT_24_00, "서지원", 0, "7", "1", "토");
         MeetingTime t8 = new MeetingTime(TimeSlot.SLOT_18_00, TimeSlot.SLOT_20_00, "서지원", 0, "7", "2", "일");
-        MeetingTime t9 = new MeetingTime(TimeSlot.SLOT_18_00, TimeSlot.SLOT_20_00, "서지원", 0, "7", "4", "화");
+        MeetingTime t9 = new MeetingTime(TimeSlot.SLOT_18_00, TimeSlot.SLOT_20_00, "서지원", 2, "7", "4", "화");
 
         MeetingTime t10 = new MeetingTime(TimeSlot.SLOT_22_00, TimeSlot.SLOT_24_00, "서채원", 0, "7", "1", "토");
-        MeetingTime t11 = new MeetingTime(TimeSlot.SLOT_22_00, TimeSlot.SLOT_24_00, "서채원", 0, "7", "2", "일");
-        MeetingTime t12 = new MeetingTime(TimeSlot.SLOT_18_00, TimeSlot.SLOT_20_00, "서채원", 0, "7", "4", "화");
+        MeetingTime t11 = new MeetingTime(TimeSlot.SLOT_22_00, TimeSlot.SLOT_24_00, "서채원", 1, "7", "2", "일");
+        MeetingTime t12 = new MeetingTime(TimeSlot.SLOT_18_00, TimeSlot.SLOT_20_00, "서채원", 1, "7", "4", "화");
         return Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
     }
 }
