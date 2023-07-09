@@ -2,10 +2,16 @@ package kwy.study.til.asap;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import kwy.study.til.asap.domain.Result;
 import kwy.study.til.asap.domain.TimeSlot;
+import kwy.study.til.asap.domain.TimeSlotInfo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static kwy.study.til.asap.domain.Duration.TWO_HOUR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -22,9 +28,35 @@ class ASAPUtilTest {
     void initTest() {
         // given
         // when
+        asapUtil.setTimeTable();
         // then
-        assertThat(asapUtil.getMeeting().getDuration()).isEqualTo("2HOUR");
+        Map<String, Map<TimeSlot, TimeSlotInfo>> table = asapUtil.getTimeTable();
+        Set<String> rows = table.keySet();
 
+        for (String row : rows) {
+            System.out.println(row + " ------------------------");
+            Map<TimeSlot, TimeSlotInfo> col = table.get(row);
+            TimeSlot[] timeSlots = TimeSlot.values();
+            for(TimeSlot timeSlot : timeSlots) {
+                System.out.println(timeSlot);
+                System.out.println(col.get(timeSlot).toString());
+            }
+            System.out.print("---------------------------------------");
+        }
+    }
+
+    @Test
+    void collectPossibleTimeTest() {
+        // given
+        asapUtil.setTimeTable();
+
+        // when
+        asapUtil.collectPossibleTime();
+
+        // then
+        for (Result r : asapUtil.getResults().get(TWO_HOUR)) {
+            System.out.println(r.toString());
+        }
     }
 
     @Test
@@ -70,4 +102,18 @@ class ASAPUtilTest {
                 () -> assertThat(asapUtil.getTimeTable().get("7.2.일").get(TimeSlot.SLOT_22_00).weight).isEqualTo(1)
         );
     }
+
+    @Test
+    void keySetTest() {
+        // given
+        Set<String> expected = Set.of("7.1.토", "7.2.일", "7.3.월", "7.4.화");
+        asapUtil.setTimeTable();
+
+        // when
+        Set<String> result = asapUtil.getTimeTable().keySet();
+
+        // then
+        Assertions.assertEquals(expected, result);
+    }
+
 }
