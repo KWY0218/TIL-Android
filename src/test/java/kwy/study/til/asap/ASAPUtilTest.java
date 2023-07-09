@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import kwy.study.til.asap.domain.Duration;
 import kwy.study.til.asap.domain.Result;
 import kwy.study.til.asap.domain.TimeSlot;
 import kwy.study.til.asap.domain.TimeSlotInfo;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static kwy.study.til.asap.domain.Duration.TWO_HOUR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -37,7 +37,7 @@ class ASAPUtilTest {
             System.out.println(row + " ------------------------");
             Map<TimeSlot, TimeSlotInfo> col = table.get(row);
             TimeSlot[] timeSlots = TimeSlot.values();
-            for(TimeSlot timeSlot : timeSlots) {
+            for (TimeSlot timeSlot : timeSlots) {
                 System.out.println(timeSlot);
                 System.out.println(col.get(timeSlot).toString());
             }
@@ -51,11 +51,16 @@ class ASAPUtilTest {
         asapUtil.setTimeTable();
 
         // when
-        asapUtil.collectPossibleTime();
+        asapUtil.total();
+        asapUtil.getFinalDate();
 
         // then
-        for (Result r : asapUtil.getResults().get(TWO_HOUR)) {
-            System.out.println(r.toString());
+        Duration[] durations = Duration.values();
+        for (Duration duration : durations) {
+            System.out.println("------------------" + duration + "-------------------");
+            for (Result r : asapUtil.getResults().get(duration)) {
+                System.out.println(r.toString());
+            }
         }
     }
 

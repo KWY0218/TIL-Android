@@ -1,6 +1,7 @@
 package kwy.study.til.asap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +56,25 @@ public class ASAPUtil {
         }
     }
 
-    public void collectPossibleTime() {
-        int needBlock = meeting.getDuration().getNeedBlock();
+    public void getFinalDate() {
+        Duration[] durations = Duration.values();
+        for (int i = meeting.getDuration().ordinal(); i >= 0; i--) {
+            List<Result> resultList = results.get(durations[i]);
+            if (!resultList.isEmpty()) {
+                Collections.sort(resultList);
+            }
+        }
+    }
+
+    public void total() {
+        Duration[] durations = Duration.values();
+        for (Duration d : durations) {
+            collectPossibleTime(d);
+        }
+    }
+
+    public void collectPossibleTime(Duration duration) {
+        int needBlock = duration.getNeedBlock();
         Set<String> colNames = timeTable.keySet();
 
         for (String col : colNames) {
@@ -96,30 +114,13 @@ public class ASAPUtil {
                             weight += timeSlotInfos.get(timeSlots[block]).weight;
                         }
 
-                        Result result = new Result(col, startTime, endTime, weight/(needBlock-1), resultUserNames);
-                        results.get(meeting.getDuration()).add(result);
+                        Result result = new Result(col, startTime, endTime, weight / (needBlock - 1), resultUserNames);
+                        results.get(duration).add(result);
 
                     }
 
                 }
             }
-
-//            List<TimeSlot> timeSlots = rowTables.keySet().stream()
-//                    .sorted(Comparator.comparingInt(TimeSlot::ordinal))
-//                    .collect(Collectors.toList());
-//
-//            for (int i = 0; i < timeSlots.size() - needBlock + 1; i++) {
-//                List<String> userNames = rowTables.get(timeSlots.get(i)).userNames;
-//
-//                for (String userName : userNames) {
-//                    for (int b = i + 1; b < i + needBlock; b++) {
-//                        List<String> names = rowTables.get(timeSlots.get(b)).userNames;
-//                        if (!names.contains(userName)) {
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 
