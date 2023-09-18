@@ -1,4 +1,4 @@
-package kwy.study.til;
+package com.example.til;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
